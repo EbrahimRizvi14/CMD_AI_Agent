@@ -1,0 +1,75 @@
+# ==============================================================================
+# VS CODE CONFIGURATIONS
+# ==============================================================================
+.vscode/
+# Optional: If you want to share workspace settings but ignore personal overrides,
+# uncomment the lines below instead of ignoring the whole folder:
+#!.vscode/settings.json
+#!.vscode/tasks.json
+#!.vscode/launch.json
+#!.vscode/extensions.json
+*.code-workspace
+
+# ==============================================================================
+# PYTHON BYTECODE & CACHE
+# ==============================================================================
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.black/
+
+# ==============================================================================
+# VIRTUAL ENVIRONMENTS
+# ==============================================================================
+.venv/
+venv/
+ENV/
+env/
+# Poetry, Pipenv, and Hatch environments
+.venv
+.pipenv
+.poetry
+.hatch
+
+# ==============================================================================
+# ENV SECRETS & CREDENTIALS (NEVER COMMIT)
+# ==============================================================================
+.env
+.env.*
+!.env.example
+secrets.json
+*.pem
+*.key
+
+# ==============================================================================
+# BUILD, PACKAGING, & DISTRIBUTIONS
+# ==============================================================================
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# ==============================================================================
+# SYSTEM JUNK (macOS / Windows)
+# ==============================================================================
+.DS_Store
+.AppleDouble
+.LSOverride
+Thumbs.db
+desktop.ini
