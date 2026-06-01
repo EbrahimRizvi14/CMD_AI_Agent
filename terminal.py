@@ -2,24 +2,8 @@ import sys
 import os
 import subprocess
 import shlex
-import traceback
 
-from groq import Groq
-from dotenv import load_dotenv
-
-
-load_dotenv()
-client = Groq(api_key=os.getenv('GROQ_API_KEY'))
-
-
-def read_file(path):
-
-    try:
-        with open(path, 'r') as f:
-            return f.read()
-        
-    except Exception as e:
-        return str(e)
+from ai.tools import processRunError, processRunOutput, readFiles, chatAnswer
 
 
 def main():
@@ -69,47 +53,18 @@ def main():
         elif cmd_lst[0] == 'ai':
 
             if cmd_lst[1] == 'read':
-                file_content = read_file(cmd_lst[2])
-                response = client.chat.completions.create(
-                model="llama-3.3-70b-versatile",
-                messages=[
-                {
-                    "role": "user",
-                    "content": f"Explain this code:\n\n{file_content}"
-                }
-            ]
-        )
-                print(response.choices[0].message.content)
+                print(readFiles(cmd_lst))
             
-            if cmd_lst[1] == 'run':
-                
-                path = os.environ.get('PATH', "")
-                directories = path.split(os.pathsep)
-
-                for directory in directories:
-                            if os.path.isdir(directory):
-                                file_path = os.path.join(directory, cmd_lst[0])
-                                if os.path.isfile(file_path) and os.access(file_path, os.X_OK):
-                                    subprocess.run([cmd_lst[0]] + cmd_lst[1:])
-                                    try:
-                                        error_output = subprocess.check_output([cmd_lst[0]] + cmd_lst[1:], stderr=subprocess.STDOUT, text=True)
-                                    except subprocess.CalledProcessError as e:
-                                        print(f"Error occurred while running {cmd_lst[0]}: {e}")
-                                        print(f"Error output: {e.output}")
+            elif cmd_lst[1] == 'run':
+                try:
+                    print(processRunOutput(cmd_lst))          
+                                    
+                except subprocess.CalledProcessError as e:
+                    print(processRunError(cmd_lst, e))
                                         
-            prompt = ' '.join(cmd_lst[1:])
+            else:
+                print(chatAnswer(cmd_lst))
 
-            response = client.chat.completions.create(
-                model="llama-3.3-70b-versatile",
-                messages=[
-                    {
-                        "role": "user",
-                        "content": prompt
-                    }
-                ]
-            )
-
-            print(response.choices[0].message.content)
         else:
 
             path = os.environ.get('PATH', "")
