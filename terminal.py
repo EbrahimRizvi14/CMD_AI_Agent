@@ -21,6 +21,7 @@ def main():
             continue
 
         if cmd_lst[0] == "exit":
+            print("Buh bye! Toodles!")
             sys.exit()
 
         elif cmd_lst[0] == 'type':
