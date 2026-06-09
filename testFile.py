@@ -1,0 +1,1 @@
+# This is a test file used to test the functionality of the terminal.py file. It is not meant to be run on its own.
